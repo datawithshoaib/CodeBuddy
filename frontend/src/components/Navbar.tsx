@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { HealthResponse, getZipDownloadUrl } from "@/lib/api";
+import { HealthResponse, getZipDownloadUrl, getApiDocsUrl } from "@/lib/api";
 
 interface NavbarProps {
   health: HealthResponse | null;
@@ -74,7 +74,7 @@ export function Navbar({ health, filesCount, isGenerating }: NavbarProps) {
               FastAPI:
             </span>
             <span className={isOnline ? "text-emerald-400" : "text-rose-400"}>
-              {isOnline ? "127.0.0.1:8000" : "Offline"}
+              {isOnline ? "Online" : "Offline"}
             </span>
           </div>
 
@@ -112,7 +112,7 @@ export function Navbar({ health, filesCount, isGenerating }: NavbarProps) {
 
           {/* FastAPI Docs Link */}
           <a
-            href="http://127.0.0.1:8000/docs"
+            href={getApiDocsUrl()}
             target="_blank"
             rel="noreferrer"
             className="hidden sm:inline-flex"

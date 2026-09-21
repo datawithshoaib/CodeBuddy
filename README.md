@@ -114,3 +114,17 @@ This automatically starts:
 - *Create a simple blog API in FastAPI with a SQLite database, CRUD endpoints for posts, and Pydantic schemas.*
 - *Create an interactive calculator web application with calculation history and keyboard shortcuts.*
 - *Build a markdown note-taking app in HTML, CSS, and JS with side-by-side preview and text export.*
+
+---
+
+## 🚀 Deployment to Vercel
+
+You can deploy CodeBuddy's Next.js web application to **Vercel** with zero configuration:
+
+1. **Import the Project** in [Vercel Dashboard](https://vercel.com/new).
+2. Set **Root Directory** to `frontend`.
+3. Set the `NEXT_PUBLIC_API_URL` environment variable pointing to your deployed FastAPI backend (e.g. on [Render](https://render.com) or [Railway](https://railway.app)).
+4. Click **Deploy**!
+
+For detailed step-by-step instructions (including Docker and 1-click backend blueprints), see the **[Vercel Deployment Guide](VERCEL_DEPLOYMENT.md)**.
+

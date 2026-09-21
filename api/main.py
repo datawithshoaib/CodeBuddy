@@ -27,9 +27,15 @@ app = FastAPI(
 )
 
 # Enable CORS for Next.js frontend
+allowed_origins_env = os.getenv("ALLOWED_ORIGINS", "*")
+if allowed_origins_env.strip() == "*":
+    allowed_origins = ["*"]
+else:
+    allowed_origins = [o.strip() for o in allowed_origins_env.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows frontend on any local port (3000, 3001, etc.)
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

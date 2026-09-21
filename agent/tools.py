@@ -1,14 +1,37 @@
+import os
 from pathlib import Path
 import subprocess
+import tempfile
 from typing import Tuple
 from langchain_core.tools import tool
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent / "generated_project"
+def _resolve_project_root() -> Path:
+    custom_root = os.environ.get("PROJECT_ROOT")
+    if custom_root:
+        return Path(custom_root).resolve()
+    # In Vercel or AWS Lambda serverless environments, filesystem is read-only outside /tmp
+    if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+        return Path(tempfile.gettempdir()) / "generated_project"
+    return (Path(__file__).resolve().parent.parent / "generated_project").resolve()
+
+
+PROJECT_ROOT = _resolve_project_root()
+
+
+def init_project_root() -> str:
+    global PROJECT_ROOT
+    try:
+        PROJECT_ROOT.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        # Fallback to temp directory if current location is read-only
+        PROJECT_ROOT = Path(tempfile.gettempdir()) / "generated_project"
+        PROJECT_ROOT.mkdir(parents=True, exist_ok=True)
+    return str(PROJECT_ROOT)
 
 
 def safe_path_for_project(path: str) -> Path:
-
+    init_project_root()
     p = (PROJECT_ROOT / path).resolve()
 
     if (PROJECT_ROOT.resolve() not in p.parents
@@ -73,19 +96,15 @@ def run_cmd(cmd: str, cwd: str = None, timeout: int = 30) -> Tuple[int, str, str
 
     cwd_dir = safe_path_for_project(cwd) if cwd else PROJECT_ROOT
 
-    res = subprocess.run(cmd, 
-                         shell=True, 
-                         cwd=str(cwd_dir), 
-                         capture_output=True, 
-                         text=True, 
-                         timeout=timeout)
+    try:
+        res = subprocess.run(cmd, 
+                             shell=True, 
+                             cwd=str(cwd_dir), 
+                             capture_output=True, 
+                             text=True, 
+                             timeout=timeout)
+        return res.returncode, res.stdout, res.stderr
+    except Exception as e:
+        return 1, "", f"Command execution error: {str(e)}"
 
-    return res.returncode, res.stdout, res.stderr
-
-
-def init_project_root():
-
-    PROJECT_ROOT.mkdir(parents=True, exist_ok=True)
-
-    return str(PROJECT_ROOT)
 
