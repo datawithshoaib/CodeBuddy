@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Note Taker</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Highlight.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+    <!-- Marked library -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Markdown Note Taker</h1>
+        <button id="theme-toggle">Toggle Theme</button>
+    </header>
+    <div class="toolbar">
+        <button data-action="bold"><strong>B</strong></button>
+        <button data-action="italic"><em>I</em></button>
+        <button data-action="code"><code>{ }</code></button>
+        <button data-action="heading">H</button>
+        <button data-action="export">Export</button>
+        <button data-action="clear">Clear</button>
+    </div>
+    <div class="main">
+        <textarea id="editor" class="editor" placeholder="Start typing markdown..."></textarea>
+        <div id="preview" class="preview"></div>
+    </div>
+    <!-- Highlight.js script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

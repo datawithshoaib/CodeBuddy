@@ -1,0 +1,236 @@
+/*
+ * Global Styles and Theme Variables
+ */
+:root {
+    /* Base font size – makes rem calculations easy */
+    font-size: 16px;
+
+    /* Light theme defaults */
+    --bg-color: #f0f0f0;
+    --text-color: #333333;
+    --toolbar-bg: #e0e0e0;
+    --button-bg: #007bff;
+    --button-hover-bg: #0056b3;
+    --button-text: #ffffff;
+    --code-bg: #f5f5f5;
+    --code-text: #2d2d2d;
+    --border-color: #cccccc;
+    --editor-bg: #ffffff;
+    --preview-bg: #fafafa;
+}
+
+/* Dark theme – activated by adding data-theme="dark" to <html> or <body> */
+[data-theme="dark"] {
+    --bg-color: #1e1e1e;
+    --text-color: #e0e0e0;
+    --toolbar-bg: #2c2c2c;
+    --button-bg: #4a90e2;
+    --button-hover-bg: #357ab8;
+    --button-text: #ffffff;
+    --code-bg: #2d2d2d;
+    --code-text: #f8f8f2;
+    --border-color: #555555;
+    --editor-bg: #2b2b2b;
+    --preview-bg: #2a2a2a;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+/* Layout container */
+.app {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* two equal columns */
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    background-color: var(--bg-color);
+}
+
+/* Toolbar */
+.toolbar {
+    grid-column: 1 / -1; /* span full width */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--toolbar-bg);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.toolbar button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.toolbar button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Theme toggle button – usually placed inside .toolbar */
+.theme-toggle {
+    margin-left: auto; /* push to the right */
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background-color: var(--button-hover-bg);
+}
+
+/* Editor styling */
+.editor {
+    /* container for the textarea – using the same grid cell as before */
+    display: flex;
+    flex-direction: column;
+}
+
+.editor textarea,
+#editor {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    resize: vertical;
+    width: 100%;
+    height: 300px;
+    box-sizing: border-box;
+    background-color: var(--editor-bg);
+    color: var(--text-color);
+}
+
+/* Preview pane styling */
+.preview,
+#preview {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--preview-bg);
+    overflow: auto;
+    min-height: 300px;
+    box-sizing: border-box;
+    color: var(--text-color);
+}
+
+/* Controls (buttons) – kept for backward compatibility */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.controls button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.controls button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+/* Responsive layout – stack columns on narrow screens */
+@media (max-width: 600px) {
+    .app {
+        grid-template-columns: 1fr; /* single column */
+    }
+    .toolbar {
+        flex-wrap: wrap;
+    }
+}
+
+/* Highlight.js syntax highlighting – basic theme that respects our CSS variables */
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5rem;
+    background: var(--code-bg);
+    color: var(--code-text);
+    border-radius: 4px;
+}
+
+.hljs-comment,
+.hljs-quote {
+    color: #6a9955; /* comment color – will adapt in dark mode via variable if needed */
+    font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+    color: #569cd6;
+    font-weight: bold;
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-attr {
+    color: #ce9178;
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+    color: #b5cea8;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link {
+    color: #9cdcfe;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+    color: #dcdcaa;
+}
+
+.hljs-meta {
+    color: #d4d4d4;
+}
+
+.hljs-deletion {
+    background: #ffdddd;
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
+}
+
+/* Optional Google Font – uncomment if you want to use a custom font */
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+body { font-family: 'Inter', Arial, Helvetica, sans-serif; } */

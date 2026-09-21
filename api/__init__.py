@@ -1,0 +1,1 @@
+# CodeBuddy FastAPI backend
